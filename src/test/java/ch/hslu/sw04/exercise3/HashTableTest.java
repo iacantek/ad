@@ -157,10 +157,12 @@ class HashTableTest {
         table.insert('k'); // index: 7 (hash code % 10)
 
         // act
+        var sizeBefore = table.allocatedSize();
         var success = table.remove('k');
 
         // assert
         assertTrue(success);
+        assertEquals(sizeBefore-1, table.allocatedSize());
     }
 
     @Test
@@ -171,10 +173,12 @@ class HashTableTest {
         table.insert('k'); // index: 7 => 8 (hash code % 10)
 
         // act
+        var sizeBefore = table.allocatedSize();
         var success = table.remove('k');
 
         // assert
         assertTrue(success);
+        assertEquals(sizeBefore-1, table.allocatedSize());
     }
 
     @Test
@@ -189,10 +193,12 @@ class HashTableTest {
         table.remove('c');
 
         // act
+        var sizeBefore = table.allocatedSize();
         var success = table.remove('k');
 
         // assert
         assertTrue(success);
+        assertEquals(sizeBefore-1, table.allocatedSize());
     }
 
     @Test
@@ -201,10 +207,12 @@ class HashTableTest {
         var table = new HashTable<Character>();
 
         // act
+        var sizeBefore = table.allocatedSize();
         var success = table.remove('a');
 
         // assert
         assertFalse(success);
+        assertEquals(sizeBefore, table.allocatedSize());
     }
 
     @Test

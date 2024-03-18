@@ -6,7 +6,6 @@ public class HashTable<T> implements IHashTable<T> {
     private static final int TABLE_SIZE = 10;
 
     private final Allocation<T>[] table = new Allocation[TABLE_SIZE];
-    private int allocatedSize = 0;
 
     @Override
     public boolean insert(final T value) {
@@ -29,7 +28,6 @@ public class HashTable<T> implements IHashTable<T> {
         }
 
         this.table[index] = allocation;
-        this.allocatedSize++;
         return true;
     }
 
@@ -73,7 +71,13 @@ public class HashTable<T> implements IHashTable<T> {
 
     @Override
     public int allocatedSize() {
-        return this.allocatedSize;
+        var allocatedSize = 0;
+        for (var allocation : this.table) {
+            if (allocation != null && !allocation.isGrave()) {
+                allocatedSize++;
+            }
+        }
+        return allocatedSize;
     }
 
     @Override
@@ -91,4 +95,6 @@ public class HashTable<T> implements IHashTable<T> {
     private int getIndex(final T value) {
         return value.hashCode() % TABLE_SIZE;
     }
+
+
 }
