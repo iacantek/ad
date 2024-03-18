@@ -9,7 +9,7 @@ class AllocationTest {
     @Test
     void getValue() {
         // arrange
-        final String value = "hello";
+        final char value = 'h';
         var allocation = new Allocation<>(value);
 
         // act
@@ -22,8 +22,8 @@ class AllocationTest {
     @Test
     void testEquals() {
         // arrange
-        var allocation1 = new Allocation<>("hello");
-        var allocation2 = new Allocation<>("hello");
+        var allocation1 = new Allocation<>('h');
+        var allocation2 = new Allocation<>('h');
 
         // assert
         assertTrue(allocation1.equals(allocation2));
@@ -33,8 +33,8 @@ class AllocationTest {
     @Test
     void testHashCode() {
         // arrange
-        var allocation1 = new Allocation<>("hello");
-        var allocation2 = new Allocation<>("hello");
+        var allocation1 = new Allocation<>('h');
+        var allocation2 = new Allocation<>('h');
 
         // assert
         assertEquals(allocation1.hashCode(), allocation2.hashCode());
@@ -43,14 +43,14 @@ class AllocationTest {
     @Test
     void testToString() {
         // arrange
-        var allocation1 = new Allocation<>("hello");
+        var allocation1 = new Allocation<>('h');
 
         // act
         var string = allocation1.toString();
 
         // assert
         assertEquals("Allocation{" +
-                "value=hello" +
+                "value=h" +
                 '}',
                 string);
     }

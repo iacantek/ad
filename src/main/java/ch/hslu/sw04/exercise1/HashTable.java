@@ -9,7 +9,7 @@ public class HashTable<T> implements IHashTable<T> {
     private int allocatedSize = 0;
 
     @Override
-    public void insert(T value) {
+    public void insert(final T value) {
         var allocation = new Allocation<>(value);
         var index = allocation.hashCode() % table.length;
         this.table[index] = allocation;
@@ -17,7 +17,7 @@ public class HashTable<T> implements IHashTable<T> {
     }
 
     @Override
-    public T read(int hash) {
+    public T read(final int hash) {
         return this.table[hash].getValue();
     }
 
