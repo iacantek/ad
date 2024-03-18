@@ -14,7 +14,7 @@ class HashTableTest {
         table.insert("hello");
 
         // assert
-        assertEquals(1, table.getAllocatedSize());
+        assertEquals(1, table.allocatedSize());
     }
 
     @Test
@@ -38,7 +38,7 @@ class HashTableTest {
         table.insert(insertValue);
 
         // act
-        var hash = insertValue.hashCode() % table.getSize();
+        var hash = insertValue.hashCode() % table.size();
         var readValue = table.read(hash);
 
         // assert

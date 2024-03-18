@@ -22,12 +22,12 @@ public class HashTable<T> implements IHashTable<T> {
     }
 
     @Override
-    public int getAllocatedSize() {
+    public int allocatedSize() {
         return this.allocatedSize;
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return TABLE_SIZE;
     }
 

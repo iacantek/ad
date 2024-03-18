@@ -18,11 +18,11 @@ public interface IHashTable<T> {
      * Gets allocated size of hash table.
      * @return allocated size
      */
-    int getAllocatedSize();
+    int allocatedSize();
 
     /**
      * Gets size of hash table.
      * @return size
      */
-    int getSize();
+    int size();
 }
