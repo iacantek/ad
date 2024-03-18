@@ -1,4 +1,4 @@
-package ch.hslu.sw04;
+package ch.hslu.sw04.exercise1;
 
 public interface IHashTable<T> {
     /**
