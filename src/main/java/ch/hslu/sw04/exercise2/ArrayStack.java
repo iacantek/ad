@@ -3,10 +3,6 @@ package ch.hslu.sw04.exercise2;
 public class ArrayStack<T> implements IArrayStack<T> {
     private final StackItem<T>[] stackItems;
 
-    public ArrayStack() {
-        this(100_000);
-    }
-
     public ArrayStack(final int allocatedSize) throws IllegalArgumentException {
         if (allocatedSize <= 0) {
             throw new IllegalArgumentException("The stack must be able to at least hold one item!");
@@ -44,12 +40,7 @@ public class ArrayStack<T> implements IArrayStack<T> {
 
     @Override
     public boolean isFull() {
-        for (var i = 0; i < this.stackItems.length; i++) {
-            if (stackItems[i] == null) {
-                return false;
-            }
-        }
-
-        return true;
+        // if top item is not null
+        return stackItems[stackItems.length - 1] != null;
     }
 }
