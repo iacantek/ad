@@ -31,6 +31,21 @@ class HashTableTest {
     }
 
     @Test
+    void testInsertSameValue() {
+        // arrange
+        var table = new ch.hslu.sw04.exercise3.HashTable<Character>();
+
+        // act
+        var successA1 = table.insert('a'); // index: 7 (hash code % 10)
+        var successA2 = table.insert('a'); // index: 7 (hash code % 10)
+
+        // assert
+        assertTrue(successA1);
+        assertFalse(successA2);
+        assertEquals(1, table.allocatedSize());
+    }
+
+    @Test
     void testRemove() {
         // arrange
         var table = new HashTable<Character>();

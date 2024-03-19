@@ -6,7 +6,7 @@ public interface IHashTable<T> {
      * @param value value to insert
      * @return true if insert succeeded, else false
      */
-    void insert(T value);
+    boolean insert(T value);
 
     /**
      * Reads the value from a hash table from the given index.

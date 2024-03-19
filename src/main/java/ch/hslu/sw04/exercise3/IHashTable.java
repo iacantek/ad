@@ -33,7 +33,7 @@ public interface IHashTable<T> {
      * Gets allocated size of hash table.
      * @return allocated size
      */
-    int allocatedSize();
+    long allocatedSize();
 
     /**
      * Gets size of hash table.

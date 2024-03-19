@@ -1,6 +1,7 @@
 package ch.hslu.sw04.exercise3;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class HashTable<T> implements IHashTable<T> {
     private static final int TABLE_SIZE = 10;
@@ -20,7 +21,9 @@ public class HashTable<T> implements IHashTable<T> {
             if (index == TABLE_SIZE) { // reached end of array, continue searching at beginning
                 index = 0;
             }
-            if (index == start) { // no empty slot was found, array is already full
+            // no empty slot was found, array is already full
+            // or value already exists in hash table
+            if (index == start || slot.getValue().equals(value)) {
                 return false;
             }
 
@@ -70,14 +73,8 @@ public class HashTable<T> implements IHashTable<T> {
     }
 
     @Override
-    public int allocatedSize() {
-        var allocatedSize = 0;
-        for (var allocation : this.table) {
-            if (allocation != null && !allocation.isGrave()) {
-                allocatedSize++;
-            }
-        }
-        return allocatedSize;
+    public long allocatedSize() {
+        return Arrays.stream(this.table).filter(Objects::nonNull).filter(a -> !a.isGrave()).count();
     }
 
     @Override

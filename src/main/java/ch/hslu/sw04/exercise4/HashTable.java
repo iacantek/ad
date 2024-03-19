@@ -9,21 +9,23 @@ public class HashTable<T> implements IHashTable<T> {
     private final Object[] values = new Object[TABLE_SIZE];
 
     @Override
-    public void insert(T value) {
+    public boolean insert(T value) {
         var allocation = new Allocation<>(value);
         var index = this.getIndex(value);
 
         var slot = this.table[index];
         if (slot == null) {
             this.table[index] = allocation;
-            return;
+            return true;
         }
 
         while(slot.next != null) {
+            if (slot.next.getValue().equals(value)) return false;
             slot = slot.next;
         }
 
         slot.next = allocation;
+        return true;
     }
 
     @Override
