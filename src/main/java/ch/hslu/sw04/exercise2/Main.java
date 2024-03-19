@@ -19,17 +19,17 @@ public final class Main {
         // warm-up (100'000 objects, 1'000 runs)
         runStack(RUNS, data1, true); // java.util.Stack
         runOwnStack(RUNS, data1, true); // own Stack
-        runDequeue(RUNS, data1, true); // java.util.Dequeue
+        runDeque(RUNS, data1, true); // java.util.Dequeue
 
         // run 1 (100'000 objects, 1'000 runs)
         runStack(RUNS, data1); // java.util.Stack
         runOwnStack(RUNS, data1); // own Stack
-        runDequeue(RUNS, data1); // java.util.Dequeue
+        runDeque(RUNS, data1); // java.util.Dequeue
 
         // run 2 (1'000'000 objects, 1'000 runs)
         runStack(RUNS, data2); // java.util.Stack
         runOwnStack(RUNS, data2); // own Stack
-        runDequeue(RUNS, data2); // java.util.Dequeue
+        runDeque(RUNS, data2); // java.util.Dequeue
     }
 
     private static void runStack(final int runs, final Allocation[] data) {
@@ -76,10 +76,10 @@ public final class Main {
         LOGGER.info("Duration Own Stack: (" + runs + " runs) " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
     }
 
-    private static void runDequeue(final int runs, final Allocation[] data) {
+    private static void runDeque(final int runs, final Allocation[] data) {
         runStack(runs, data, false);
     }
-    private static void runDequeue(final int runs, final Allocation[] data, boolean isWarmUp) {
+    private static void runDeque(final int runs, final Allocation[] data, boolean isWarmUp) {
         var runTimes = new long[runs];
 
         for (var i = 0; i < runs; i++) {

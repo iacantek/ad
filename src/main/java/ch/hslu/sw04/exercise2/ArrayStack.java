@@ -2,6 +2,7 @@ package ch.hslu.sw04.exercise2;
 
 public class ArrayStack<T> implements IArrayStack<T> {
     private final StackItem<T>[] stackItems;
+    private int currentIndex;
 
     public ArrayStack(final int allocatedSize) throws IllegalArgumentException {
         if (allocatedSize <= 0) {
@@ -9,6 +10,7 @@ public class ArrayStack<T> implements IArrayStack<T> {
         }
 
         this.stackItems = new StackItem[allocatedSize];
+        this.currentIndex = 0;
     }
 
     @Override
@@ -20,20 +22,17 @@ public class ArrayStack<T> implements IArrayStack<T> {
     public void push(T item) throws IndexOutOfBoundsException {
         if (this.isFull()) throw new IndexOutOfBoundsException();
 
-        for (var i = 0; i < stackItems.length; i++) {
-            if (stackItems[i] == null) {
-                stackItems[i] = new StackItem(item, i == 0 ? null : i-1);
-                return;
-            }
-        }
+        this.stackItems[this.currentIndex] = new StackItem(item);
+        this.currentIndex++;
     }
 
     @Override
     public T pop() {
-        var topItem = stackItems[stackItems.length - 1];
+        var topItem = this.stackItems[this.stackItems.length - 1];
         if (topItem == null) return null;
 
-        stackItems[stackItems.length - 1] = null;
+        this.stackItems[stackItems.length - 1] = null;
+        this.currentIndex--;
 
         return topItem.getValue();
     }
@@ -41,6 +40,6 @@ public class ArrayStack<T> implements IArrayStack<T> {
     @Override
     public boolean isFull() {
         // if top item is not null
-        return stackItems[stackItems.length - 1] != null;
+        return this.currentIndex == this.stackItems.length;
     }
 }
