@@ -28,10 +28,8 @@ public class ArrayStack<T> implements IArrayStack<T> {
 
     @Override
     public T pop() {
-        var topItem = this.stackItems[this.stackItems.length - 1];
-        if (topItem == null) return null;
-
-        this.stackItems[stackItems.length - 1] = null;
+        var topItem = this.stackItems[currentIndex];
+        this.stackItems[currentIndex] = null;
         this.currentIndex--;
 
         return topItem.getValue();

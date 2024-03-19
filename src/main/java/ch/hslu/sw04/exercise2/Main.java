@@ -17,16 +17,19 @@ public final class Main {
         var data2 = ArrayFactory.createArray(1_000_000);
 
         // warm-up (100'000 objects, 1'000 runs)
+        LOGGER.info("Warm-up starting... (100'000 objects, 1'000 runs)");
         runStack(RUNS, data1, true); // java.util.Stack
         runOwnStack(RUNS, data1, true); // own Stack
         runDeque(RUNS, data1, true); // java.util.Dequeue
 
         // run 1 (100'000 objects, 1'000 runs)
+        LOGGER.info("\nRun 1 starting... (100'000 objects, 1'000 runs)");
         runStack(RUNS, data1); // java.util.Stack
         runOwnStack(RUNS, data1); // own Stack
         runDeque(RUNS, data1); // java.util.Dequeue
 
         // run 2 (1'000'000 objects, 1'000 runs)
+        LOGGER.info("\nRun 2 starting... (1'000'000 objects, 1'000 runs)");
         runStack(RUNS, data2); // java.util.Stack
         runOwnStack(RUNS, data2); // own Stack
         runDeque(RUNS, data2); // java.util.Dequeue
@@ -51,7 +54,7 @@ public final class Main {
 
         var average = (long) Arrays.stream(runTimes).asDoubleStream().average().orElse(0);
 
-        LOGGER.info("Duration Stack: (" + runs + " runs) " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
+        LOGGER.info("Duration Stack: " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
     }
 
     private static void runOwnStack(final int runs, final Allocation[] data) {
@@ -73,29 +76,29 @@ public final class Main {
 
         var average = (long) Arrays.stream(runTimes).asDoubleStream().average().orElse(0);
 
-        LOGGER.info("Duration Own Stack: (" + runs + " runs) " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
+        LOGGER.info("Duration Own Stack: " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
     }
 
     private static void runDeque(final int runs, final Allocation[] data) {
-        runStack(runs, data, false);
+        runDeque(runs, data, false);
     }
     private static void runDeque(final int runs, final Allocation[] data, boolean isWarmUp) {
         var runTimes = new long[runs];
 
         for (var i = 0; i < runs; i++) {
             var deque = new ArrayDeque<Allocation>(data.length);
-            long startStack = System.nanoTime();
+            long startDeque = System.nanoTime();
             for (var j = 0; j < data.length; j++) {
                 deque.push(data[j]);
             }
-            long endStack = System.nanoTime();
+            long endDeque = System.nanoTime();
 
-            runTimes[i] = endStack - startStack;
+            runTimes[i] = endDeque - startDeque;
         }
 
         var average = (long) Arrays.stream(runTimes).asDoubleStream().average().orElse(0);
 
-        LOGGER.info("Duration Deque: (" + runs + " runs) " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
+        LOGGER.info("Duration Deque: " + formatInterval(average) + (isWarmUp ? " (warm-up)" : ""));
     }
 
     private static String formatInterval(final long nanos)
