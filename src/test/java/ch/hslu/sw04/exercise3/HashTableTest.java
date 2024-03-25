@@ -18,6 +18,18 @@ class HashTableTest {
     }
 
     @Test
+    void testInsertInteger() {
+        // arrange
+        var table = new HashTable<Integer>();
+
+        // act
+        table.insert(-500_000);
+
+        // assert
+        assertEquals(1, table.allocatedSize());
+    }
+
+    @Test
     void testInsertSameValue() {
         // arrange
         var table = new HashTable<Character>();

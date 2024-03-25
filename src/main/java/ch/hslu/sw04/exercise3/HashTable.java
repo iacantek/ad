@@ -90,7 +90,7 @@ public class HashTable<T> implements IHashTable<T> {
     }
 
     private int getIndex(final T value) {
-        return value.hashCode() % TABLE_SIZE;
+        return Math.abs(value.hashCode() % TABLE_SIZE);
     }
 
 
