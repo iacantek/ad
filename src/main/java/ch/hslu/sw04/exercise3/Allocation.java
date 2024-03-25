@@ -26,8 +26,8 @@ public class Allocation<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Allocation<?> that = (Allocation<?>) o;
-        return isGrave == that.isGrave && Objects.equals(value, that.value);
+        Allocation<?> allocation = (Allocation<?>) o;
+        return isGrave == allocation.isGrave && Objects.equals(value, allocation.value);
     }
 
     @Override
