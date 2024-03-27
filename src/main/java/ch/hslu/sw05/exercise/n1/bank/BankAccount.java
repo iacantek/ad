@@ -52,7 +52,7 @@ public final class BankAccount {
      *
      * @param amount Einzuzahlender Betrag
      */
-    public void deposit(final int amount) {
+    public synchronized void deposit(final int amount) {
         this.balance += amount;
     }
 
