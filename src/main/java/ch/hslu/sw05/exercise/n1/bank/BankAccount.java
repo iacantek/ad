@@ -43,7 +43,7 @@ public final class BankAccount {
      *
      * @return Kontostand.
      */
-    public int getBalance() {
+    public synchronized int getBalance() {
         return this.balance;
     }
 
@@ -52,7 +52,7 @@ public final class BankAccount {
      *
      * @param amount Einzuzahlender Betrag
      */
-    public void deposite(final int amount) {
+    public void deposit(final int amount) {
         this.balance += amount;
     }
 
@@ -63,7 +63,9 @@ public final class BankAccount {
      * @param amount zu überweisender Betrag.
      */
     public void transfer(final BankAccount target, final int amount) {
-        this.balance -= amount;
-        target.deposite(amount);
+        synchronized (BankAccount.class) {
+            this.balance -= amount;
+            target.deposit(amount);
+        }
     }
 }
