@@ -39,9 +39,8 @@ public class JoinAndSleepTask implements Runnable {
         this.sleepTime = sleepTime;
     }
 
-    public JoinAndSleepTask join(final Thread joinFor) {
+    public void join(final Thread joinFor) {
         this.joinFor = joinFor;
-        return this;
     }
 
     public Thread getThread() {
