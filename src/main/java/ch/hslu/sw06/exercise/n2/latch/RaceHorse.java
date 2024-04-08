@@ -44,13 +44,13 @@ public final class RaceHorse implements Runnable {
 
     @Override
     public void run() {
-        LOG.info("Rennpferd {} geht in die Box.", name);
+        LOG.info("{} geht in die Box.", name);
         try {
             startSignal.acquire();
-            LOG.info("Rennpferd {} laeuft los...", name);
+            LOG.info("{} laeuft los...", name);
             Thread.sleep(random.nextInt(3000));
         } catch (InterruptedException ex) {
-            LOG.debug(ex.getMessage(), ex);
+            LOG.error(ex.getMessage(), ex);
         }
         LOG.info("Rennpferd {} ist im Ziel.", name);
     }

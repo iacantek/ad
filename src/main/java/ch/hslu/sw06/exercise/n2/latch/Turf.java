@@ -27,21 +27,21 @@ public final class Turf {
     private static final int HORSES = 5;
 
     /**
-     * Privater Konstruktor.
-     */
-    private Turf() {
-    }
-
-    /**
      * Main-Demo.
      * @param args not used.
      */
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws InterruptedException {
         final Synch starterBox = new Latch();
+        final Thread[] threads = new Thread[HORSES];
         for (int i = 1; i <= HORSES; i++) {
-            Thread.startVirtualThread(new RaceHorse(starterBox, "Horse " + i));
+            threads[i-1] = Thread.startVirtualThread(new RaceHorse(starterBox, "Rennpferd " + i));
         }
         LOG.info("Start...");
         starterBox.release();
+
+        // wait until all horses have finished the race
+        for (var thread : threads) {
+            thread.join();
+        }
     }
 }
