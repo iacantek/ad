@@ -24,24 +24,23 @@ import org.slf4j.LoggerFactory;
  * werden. Danach sind sie frei passierbar.
  */
 public class Latch implements Synch {
-    private static final Logger LOG = LoggerFactory.getLogger(Latch.class);
+    private final Object lock = new Object();
     private boolean isReleased = false;
 
     @Override
-    public synchronized void acquire() {
-        while (!this.isReleased) {
-            try {
-                this.wait();
-            }
-            catch (InterruptedException e) {
-                LOG.error(e.getMessage(), e);
+    public void acquire() throws InterruptedException {
+        synchronized (lock) {
+            while (!this.isReleased) {
+                lock.wait();
             }
         }
     }
 
     @Override
-    public synchronized void release() {
-        this.isReleased = true;
-        this.notifyAll();
+    public void release() {
+        synchronized (lock) {
+            this.isReleased = true;
+            lock.notifyAll();
+        }
     }
 }

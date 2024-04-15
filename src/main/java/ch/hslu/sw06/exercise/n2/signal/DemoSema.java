@@ -41,37 +41,37 @@ public final class DemoSema {
         try {
             new Semaphore(4, 3);
         } catch (Exception e) {
-            LOG.debug(e.getMessage());
+            LOG.error("Semaphore 1: " + e.getMessage());
         }
         try {
             Semaphore sema = new Semaphore(3, 3);
             sema.release();
         } catch (Exception e) {
-            LOG.debug(e.getMessage());
+            LOG.error("Semaphore 2: " + e.getMessage());
         }
         try {
             Semaphore sema = new Semaphore(0, 3);
             sema.release(4);
         } catch (Exception e) {
-            LOG.debug(e.getMessage());
+            LOG.error("Semaphore 3: " + e.getMessage());
         }
         try {
             Semaphore sema = new Semaphore(3, 3);
             sema.acquire(4);
         } catch (Exception e) {
-            LOG.debug(e.getMessage());
+            LOG.error("Semaphore 4: " + e.getMessage());
         }
         try {
             Semaphore sema = new Semaphore(3, 3);
             sema.acquire(-1);
         } catch (Exception e) {
-            LOG.debug(e.getMessage());
+            LOG.error("Semaphore 5: " + e.getMessage());
         }
         try {
             Semaphore sema = new Semaphore(1, 3);
             sema.release(-1);
         } catch (Exception e) {
-            LOG.debug(e.getMessage());
+            LOG.error("Semaphore 6: " + e.getMessage());
         }
     }
 }

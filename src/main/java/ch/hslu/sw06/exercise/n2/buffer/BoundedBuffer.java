@@ -17,6 +17,7 @@ package ch.hslu.sw06.exercise.n2.buffer;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Puffer nach dem First In First Out Prinzip mit einer begrenzten Kapazität.
@@ -25,7 +26,6 @@ import java.util.concurrent.Semaphore;
  * @param <T> Elememente des Buffers
  */
 public final class BoundedBuffer<T> implements Buffer<T> {
-
     private final ArrayDeque<T> queue;
     private final Semaphore putSema;
     private final Semaphore takeSema;
@@ -62,27 +62,42 @@ public final class BoundedBuffer<T> implements Buffer<T> {
     }
 
     @Override
-    public boolean add(T elem, long millis) throws InterruptedException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean add(final T elem, final long millis) throws InterruptedException {
+        if (!putSema.tryAcquire(millis, TimeUnit.MILLISECONDS)) {
+            return false;
+        }
+        synchronized (queue) {
+            queue.addFirst(elem);
+        }
+        takeSema.release();
+        return true;
     }
 
     @Override
     public T remove(long millis) throws InterruptedException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!takeSema.tryAcquire(millis, TimeUnit.MILLISECONDS)) {
+            return null;
+        }
+        T elem;
+        synchronized (queue) {
+            elem = queue.removeLast();
+        }
+        putSema.release();
+        return elem;
     }
 
     @Override
     public boolean empty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return takeSema.availablePermits() == 0;
     }
 
     @Override
     public boolean full() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return putSema.availablePermits() == 0;
     }
 
     @Override
-    public boolean size() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int size() {
+        return queue.size();
     }
 }

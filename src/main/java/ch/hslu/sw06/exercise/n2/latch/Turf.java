@@ -18,30 +18,48 @@ package ch.hslu.sw06.exercise.n2.latch;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Eine Rennbahn für das Pferderennen.
  */
 public final class Turf {
 
     private static final Logger LOG = LoggerFactory.getLogger(Turf.class);
-    private static final int HORSES = 5;
+    private static final int HORSES = 20;
 
     /**
      * Main-Demo.
      * @param args not used.
      */
     public static void main(final String[] args) throws InterruptedException {
+//        final Synch starterBox = new Latch();
+//        final Thread[] threads = new Thread[HORSES];
+//        for (int i = 0; i < HORSES; i++) {
+//            threads[i] = Thread.startVirtualThread(new RaceHorse(starterBox, "Rennpferd " + (i + 1)));
+//        }
+//        Thread.sleep(500); // needed due to error in java implementation of virtual threads
+//        LOG.info("Start...");
+//        starterBox.release();
+//
+//        // wait until all horses have finished the race
+//        for (var thread : threads) {
+//            thread.join();
+//        }
+
+        final CountDownLatch readyForStart = new CountDownLatch(HORSES);
+        final CountDownLatch finishedRace = new CountDownLatch(HORSES);
         final Synch starterBox = new Latch();
-        final Thread[] threads = new Thread[HORSES];
-        for (int i = 1; i <= HORSES; i++) {
-            threads[i-1] = Thread.startVirtualThread(new RaceHorse(starterBox, "Rennpferd " + i));
+        for (int i = 0; i < HORSES; i++) {
+            Thread.startVirtualThread(new RaceHorse(readyForStart, finishedRace, starterBox, "Rennpferd " + (i + 1)));
         }
+
+        readyForStart.await();
+
         LOG.info("Start...");
         starterBox.release();
 
         // wait until all horses have finished the race
-        for (var thread : threads) {
-            thread.join();
-        }
+        finishedRace.await();
     }
 }
