@@ -43,10 +43,14 @@ public final class Producer implements Callable<Long> {
      * Liefert die Summe aller zusammengezählter Integer Werte.
      *
      * @return Summe.
-     * @throws java.lang.Exception falls Ausnahmen passieren.
      */
     @Override
-    public Long call() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Long call() {
+        long sum = 0;
+        for (int i = 1; i <= maxRange; i++) {
+            sum += i;
+            list.add(i);
+        }
+        return sum;
     }
 }

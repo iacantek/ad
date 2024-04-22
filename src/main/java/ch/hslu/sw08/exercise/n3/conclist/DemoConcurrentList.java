@@ -15,10 +15,7 @@
  */
 package ch.hslu.sw08.exercise.n3.conclist;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,10 +45,11 @@ public final class DemoConcurrentList {
      */
     public static void main(final String args[]) throws InterruptedException, ExecutionException {
         final List<Integer> list = new LinkedList<>();
+        final List<Integer> syncList = Collections.synchronizedList(list);
         final List<Future<Long>> futures = new ArrayList<>();
         try (final ExecutorService executor = Executors.newCachedThreadPool()) {
             for (int i = 0; i < 3; i++) {
-                futures.add(executor.submit(new Producer(list, 1000)));
+                futures.add(executor.submit(new Producer(syncList, 1000)));
             }
             Iterator<Future<Long>> iterator = futures.iterator();
             long totProd = 0;
@@ -61,7 +59,7 @@ public final class DemoConcurrentList {
                 LOG.info("prod sum = " + sum);
             }
             LOG.info("prod tot = " + totProd);
-            long totCons = executor.submit(new Consumer(list)).get();
+            long totCons = executor.submit(new Consumer(syncList)).get();
             LOG.info("cons tot = " + totCons);
         } finally {
             // Executor shutdown

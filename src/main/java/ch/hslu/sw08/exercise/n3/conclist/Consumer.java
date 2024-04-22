@@ -15,6 +15,7 @@
  */
 package ch.hslu.sw08.exercise.n3.conclist;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -39,10 +40,14 @@ public final class Consumer implements Callable<Long> {
      * Liefert die Summe aller ausgelesener Werte.
      *
      * @return Summe.
-     * @throws java.lang.Exception falls Ausnahmen passieren.
      */
     @Override
-    public Long call() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Long call() {
+        long sum = 0;
+        Iterator<Integer> iterable = list.iterator();
+        while (iterable.hasNext()) {
+            sum += iterable.next();
+        }
+        return sum;
     }
 }
