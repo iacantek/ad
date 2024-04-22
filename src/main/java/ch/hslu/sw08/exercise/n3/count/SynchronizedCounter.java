@@ -20,6 +20,9 @@ package ch.hslu.sw08.exercise.n3.count;
  */
 public final class SynchronizedCounter implements Counter {
 
+    private final Object lock = new Object();
+    private int counter = 0;
+
     /**
      * Erzeugt einen Zähler mit Zählerstand 0.
      */
@@ -31,7 +34,10 @@ public final class SynchronizedCounter implements Counter {
      */
     @Override
     public int increment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        synchronized (this.lock) {
+            this.counter++;
+            return this.counter;
+        }
     }
 
     /**
@@ -39,7 +45,10 @@ public final class SynchronizedCounter implements Counter {
      */
     @Override
     public int decrement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        synchronized (this.lock) {
+            this.counter--;
+            return this.counter;
+        }
     }
 
     /**
@@ -47,6 +56,6 @@ public final class SynchronizedCounter implements Counter {
      */
     @Override
     public int get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.counter;
     }
 }

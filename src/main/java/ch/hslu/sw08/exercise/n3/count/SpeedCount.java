@@ -42,11 +42,12 @@ public final class SpeedCount {
      */
     public static long speedTest(Counter counter, int counts, int threads) {
         try (final ExecutorService executor = Executors.newCachedThreadPool()) {
+            var startTime = System.nanoTime();
             for (int i = 0; i < threads; i++) {
                 executor.submit(new CountTask(counter, counts));
             }
-            long duration = -1L;
-            return duration;
+            var endTime = System.nanoTime();
+            return endTime - startTime;
         } finally {
             // Executor shutdown
         }
@@ -57,16 +58,18 @@ public final class SpeedCount {
      * @param args not used.
      */
     public static void main(final String args[]) {
-        final int passes = 1;
+        final int passes = 10;
         final int threads = 1;
         final int counts = 1_000;
         final Counter counterSync = new SynchronizedCounter();
         long sumSync = 0;
+        speedTest(counterSync, counts, threads); // first run
         for (int i = 0; i < passes; i++) {
             sumSync += speedTest(counterSync, counts, threads);
         }
         final Counter counterAtom = new AtomicCounter();
         long sumAtom = 0;
+        speedTest(counterAtom, counts, threads); // first run
         for (int i = 0; i < passes; i++) {
             sumAtom += speedTest(counterAtom, counts, threads);
         }
