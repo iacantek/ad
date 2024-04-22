@@ -15,8 +15,12 @@
  */
 package ch.hslu.sw08.exercise.n3.count;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -43,11 +47,22 @@ public final class SpeedCount {
     public static long speedTest(Counter counter, int counts, int threads) {
         try (final ExecutorService executor = Executors.newCachedThreadPool()) {
             var startTime = System.nanoTime();
+            var futures = new ArrayList<Future<Integer>>();
+
             for (int i = 0; i < threads; i++) {
-                executor.submit(new CountTask(counter, counts));
+                var future = executor.submit(new CountTask(counter, counts));
+                futures.add(future);
             }
+            for (Future<Integer> future : futures) {
+                future.get();
+            }
+
             var endTime = System.nanoTime();
-            return endTime - startTime;
+            return (endTime - startTime) / 1_000_000;
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         } finally {
             // Executor shutdown
         }
@@ -59,8 +74,8 @@ public final class SpeedCount {
      */
     public static void main(final String args[]) {
         final int passes = 10;
-        final int threads = 1;
-        final int counts = 1_000;
+        final int threads = 15;
+        final int counts = 10_000;
         final Counter counterSync = new SynchronizedCounter();
         long sumSync = 0;
         speedTest(counterSync, counts, threads); // first run

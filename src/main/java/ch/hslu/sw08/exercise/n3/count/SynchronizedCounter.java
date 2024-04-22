@@ -35,8 +35,7 @@ public final class SynchronizedCounter implements Counter {
     @Override
     public int increment() {
         synchronized (this.lock) {
-            this.counter++;
-            return this.counter;
+            return ++this.counter;
         }
     }
 
@@ -46,8 +45,7 @@ public final class SynchronizedCounter implements Counter {
     @Override
     public int decrement() {
         synchronized (this.lock) {
-            this.counter--;
-            return this.counter;
+            return --this.counter;
         }
     }
 

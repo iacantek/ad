@@ -35,7 +35,7 @@ public final class AtomicCounter implements Counter {
      */
     @Override
     public int increment() {
-        return counter.incrementAndGet();
+        return this.counter.incrementAndGet();
     }
 
     /**
@@ -43,7 +43,7 @@ public final class AtomicCounter implements Counter {
      */
     @Override
     public int decrement() {
-        return counter.decrementAndGet();
+        return this.counter.decrementAndGet();
     }
 
     /**
@@ -51,6 +51,6 @@ public final class AtomicCounter implements Counter {
      */
     @Override
     public int get() {
-        return counter.get();
+        return this.counter.get();
     }
 }
