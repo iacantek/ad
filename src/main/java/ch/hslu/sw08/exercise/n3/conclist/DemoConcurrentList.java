@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.hslu.ad.exercise.n3.conclist;
+package ch.hslu.sw08.exercise.n3.conclist;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +31,7 @@ import org.slf4j.Logger;
  */
 public final class DemoConcurrentList {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ch.hslu.ad.exercise.n3.conclist.DemoConcurrentList.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ch.hslu.sw08.exercise.n3.conclist.DemoConcurrentList.class);
 
     /**
      * Privater Konstruktor.

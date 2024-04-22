@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.hslu.ad.exercise.n3.count;
+package ch.hslu.sw08.exercise.n3.count;
 
 /**
  * Thread-sicherer Zähler mit AtomicInteger.
@@ -27,7 +27,7 @@ public final class AtomicCounter implements Counter {
     }
 
     /**
-     * see ch.hslu.ad.exercise.sw07.count.Counter#increment()
+     * see ch.hslu.sw08.exercise.sw07.count.Counter#increment()
      */
     @Override
     public int increment() {
@@ -35,7 +35,7 @@ public final class AtomicCounter implements Counter {
     }
 
     /**
-     * see ch.hslu.ad.exercise.sw07.count.Counter#decrement()
+     * see ch.hslu.sw08.exercise.sw07.count.Counter#decrement()
      */
     @Override
     public int decrement() {
@@ -43,7 +43,7 @@ public final class AtomicCounter implements Counter {
     }
 
     /**
-     * see ch.hslu.ad.exercise.sw07.count.Counter#get()
+     * see ch.hslu.sw08.exercise.sw07.count.Counter#get()
      */
     @Override
     public int get() {

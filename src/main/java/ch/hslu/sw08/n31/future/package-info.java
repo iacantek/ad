@@ -17,4 +17,4 @@
 /**
  * Inhalt von N31 - Beispiele zu Callables, Executors und Exceptions.
  */
-package ch.hslu.ad.n31.future;
+package ch.hslu.sw08.n31.future;

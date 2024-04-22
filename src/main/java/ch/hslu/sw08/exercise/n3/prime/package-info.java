@@ -17,4 +17,4 @@
 /**
  * Vorgabe für Exercises von Nebenläufigkeit N3 - Suche nach grossen Primzahlen.
  */
-package ch.hslu.ad.exercise.n3.prime;
+package ch.hslu.sw08.exercise.n3.prime;

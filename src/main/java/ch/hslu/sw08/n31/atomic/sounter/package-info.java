@@ -17,4 +17,4 @@
 /**
  * Inhalt von N31 - Atomic-Variablen - Code Skizzen.
  */
-package ch.hslu.ad.n31.atomic.sounter;
+package ch.hslu.sw08.n31.atomic.sounter;

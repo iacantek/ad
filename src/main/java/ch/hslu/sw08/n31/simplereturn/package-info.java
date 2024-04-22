@@ -17,4 +17,4 @@
 /**
  * Inhalt von N31 - Beispiele zu Futures.
  */
-package ch.hslu.ad.n31.simplereturn;
+package ch.hslu.sw08.n31.simplereturn;

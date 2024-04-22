@@ -17,4 +17,4 @@
 /**
  * Inhalt von N31 - Beispiel um ein Array nebenläufig zu sortieren.
  */
-package ch.hslu.ad.n31.future.arraysort;
+package ch.hslu.sw08.n31.future.arraysort;

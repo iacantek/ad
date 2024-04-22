@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.hslu.ad.n31.atomic.ops;
+package ch.hslu.sw08.n31.atomic.ops;
 
 import java.util.concurrent.atomic.AtomicLong;
 

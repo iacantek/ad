@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.hslu.ad.exercise.n3.bank;
+package ch.hslu.sw08.exercise.n3.bank;
 
 import java.util.ArrayList;
 import org.slf4j.LoggerFactory;

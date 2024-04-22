@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.hslu.ad.n31.simplereturn;
+package ch.hslu.sw08.n31.simplereturn;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
