@@ -1,4 +1,4 @@
-# Time Measurements
+# d), h) Time Measurements
 
 ## Quick Sort (Character)
 
@@ -42,7 +42,7 @@
 | 2         | 40'000'000 | 0-999 | 6390.191 ms |
 | 3         | 40'000'000 | 0-999 | 6516.999 ms |
 
-# Maximum Depth of Java Call Stack
+# e) Maximum Depth of Java Call Stack
 
 Determine maximum call stack size:
 
@@ -98,6 +98,12 @@ The maximum depth can be increased by allocating more stack space for the thread
 With a 2MB thread stack size, here’s the output:
 
     Maximum depth of the call stack is 49522 
+
+# i) Quicksort Ordnung
+
+- Quicksort hat im Durchschnitt eine Ordnung von **O(n * log(n))**, im schlimmsten Fall **O(n<sup>2</sup>)**
+- **O(n * log(n))** wächst schneller als **O(n)**
+- Verdoppelung der Datenmenge => Verdoppelung der Zeit (d.h. 2s => ~ 4s)
 
 <style>
     tr {
