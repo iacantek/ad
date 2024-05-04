@@ -1,32 +1,30 @@
 package ch.hslu.sw10.exercise2;
 
 import java.util.Random;
+import java.util.function.Supplier;
+import java.lang.reflect.Array;
 
 public class Sort {
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public static Character[] randomChars(final int length) {
-        var array = new Character[length];
-        var randomInts = randomInts(length, ALPHABET.length());
-        for (int i = 0; i < randomInts.length; i++) {
-            array[i] = ALPHABET.charAt(randomInts[i]);
-        }
-
-        return array;
+        return randomElements(length, () -> ALPHABET.charAt(new Random().nextInt(ALPHABET.length())), Character.class);
     }
 
-    public static Integer[] randomInts(final int length, int bound) {
-        var array = new Integer[length];
-        var random = new Random();
-        for (int i = 0; i < length; i++) {
-            array[i] = random.nextInt(bound);
-        }
-
-        return array;
+    public static Integer[] randomInts(final int length, final int bound) {
+        return randomElements(length, () -> new Random().nextInt(bound), Integer.class);
     }
 
     public static <T extends Comparable<T>> void quickSort(final T[] a) {
         quickSort(a, 0, a.length - 1);
+    }
+
+    private static <T> T[] randomElements(final int length, final Supplier<T> supplier, final Class<T> componentType) {
+        T[] array = (T[]) Array.newInstance(componentType, length);
+        for (int i = 0; i < length; i++) {
+            array[i] = supplier.get();
+        }
+        return array;
     }
 
     private static <T extends Comparable<T>> void quickSort(final T[] a, final int left, final int right) {

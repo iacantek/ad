@@ -42,6 +42,63 @@
 | 2         | 40'000'000 | 0-999 | 6390.191 ms |
 | 3         | 40'000'000 | 0-999 | 6516.999 ms |
 
+# Maximum Depth of Java Call Stack
+
+Determine maximum call stack size:
+
+    public class RecursiveCallStackOverflow {
+        static int depth = 0;
+    
+        private static void recursiveStackOverflow() {
+            depth++;
+            recursiveStackOverflow();
+        }
+        
+        public static void main(String[] args) {
+            try {
+                recursiveStackOverflow();
+            } catch (StackOverflowError e) {
+                System.out.println("Maximum depth of the call stack is " + depth);
+            }
+        }
+    }
+
+## Call Stack Size
+
+### My Call Stack Size
+
+The call stack size can be fetched with the following command.
+
+    $ java -XX:+PrintFlagsFinal -version | grep ThreadStackSize
+
+In my case it's set at 2MB.
+
+    intx ThreadStackSize = 2048 
+
+Which leads to the following call stack size:
+
+    Maximum depth of the call stack is 43445
+
+### Default Call Stack Size
+
+By default, the JVM allocates a 1MB thread stack size.
+
+    intx ThreadStackSize = 1024
+
+With a 1MB stack, approximately 10000 to 20000 method calls can be made before hitting the maximum depth, assuming each stack frame uses around 100 bytes.
+
+    Maximum depth of the call stack is 21792
+
+###  Increase Call Stack Size
+
+The maximum depth can be increased by allocating more stack space for the thread using the -Xss JVM parameter:
+
+    $ java -Xss2m RecursiveCallStackOverflow
+
+With a 2MB thread stack size, here’s the output:
+
+    Maximum depth of the call stack is 49522 
+
 <style>
     tr {
         color: black;

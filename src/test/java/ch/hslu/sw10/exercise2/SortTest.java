@@ -13,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class SortTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SortTest.class);
 
+    /**
+     * Tests performance of quick sort using a Character array of various sizes.
+     * @param length Array size
+     */
     @ParameterizedTest
     @ValueSource(ints = { 100_000, 500_000, 1_000_000 })
     void testQuickSortPerformanceCharacters(final int length) {
@@ -23,11 +27,13 @@ class SortTest {
         double[] durations = sort(chars, 3);
 
         // output
-        for (int i = 0; i < durations.length; i++) {
-            LOGGER.info("Duration {} ({} items): {} ms", i+1, length, durations[i]);
-        }
+        printResult(length, durations);
     }
 
+    /**
+     * Tests performance of quick sort using an Integer array of various sizes.
+     * @param length Array size
+     */
     @ParameterizedTest
     @ValueSource(ints = { 10_000_000, 20_000_000, 40_000_000 }) // OutOfMemoryError at 50 Mio.
     void testQuickSortPerformanceIntegers(final int length) {
@@ -38,9 +44,7 @@ class SortTest {
         double[] durations = sort(ints, 3);
 
         // output
-        for (int i = 0; i < durations.length; i++) {
-            LOGGER.info("Duration {} ({} items): {} ms", i+1, length, durations[i]);
-        }
+        printResult(length, durations);
     }
 
     private <T extends Comparable<T>> double[] sort(final T[] array, final int iterations) {
@@ -55,6 +59,12 @@ class SortTest {
             durations[i] = duration / 1_000_000d;
         }
         return durations;
+    }
+
+    private void printResult(final int length, final double[] durations) {
+        for (int i = 0; i < durations.length; i++) {
+            LOGGER.info("Iteration {} ({} items): {} ms", i+1, length, durations[i]);
+        }
     }
 
     @Test
