@@ -40,20 +40,30 @@ public final class DemoMergesort {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 300_000;
+        final int size = 500_000_000;
         final int[] arrayOriginal = new int[size];
         try (final ForkJoinPool pool = new ForkJoinPool()) {
             RandomInitTask initTask = new RandomInitTask(arrayOriginal, 100);
             pool.invoke(initTask);
             int[] array = Arrays.copyOf(arrayOriginal, size);
             final MergesortTask sortTask = new MergesortTask(array);
+
+            long startConc = System.nanoTime();
             pool.invoke(sortTask);
-            LOG.info("Conc. Mergesort : {} sec.", '?');
+            long durationConc = System.nanoTime() - startConc;
+            LOG.info("Conc. Mergesort : {} sec.", toSeconds(durationConc));
+
             array = Arrays.copyOf(arrayOriginal, size);
+            long startRecur = System.nanoTime();
             MergesortRecursive.mergeSort(array);
-            LOG.info("MergesortRec.   : {} sec.", '?');
+            long durationRecur = System.nanoTime() - startRecur;
+            LOG.info("MergesortRec.   : {} sec.", toSeconds(durationRecur));
         } finally {
             // Executor shutdown
         }
+    }
+
+    private static double toSeconds(long nanos) {
+        return nanos / 1_000_000_000d;
     }
 }
