@@ -26,19 +26,39 @@ public final class QuicksortRecursive {
      *
      * @param array input array.
      */
-    public static void quicksort(int[] array) {
-        QuicksortRecursive.quicksort(array, 0, array.length - 1);
+    public static void quickSort(int[] array) {
+        QuicksortRecursive.quickSort(array, 0, array.length - 1);
     }
 
     /**
      * Recursive quicksort logic.
      *
-     * @param array input array.
-     * @param startIdx start index of the array.
-     * @param endIdx end index of the array.
+     * @param a input array.
+     * @param left start index of the array.
+     * @param right end index of the array.
      */
-    public static void quicksort(int[] array, int startIdx, int endIdx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static void quickSort(final int[] a, final int left, final int right) {
+        int up = left; // linke Grenze
+        int down = right - 1; // rechte Grenze (ohne Trennelement)
+        int t = a[right]; // rechtes Element als Trennelement
+        boolean allChecked = false;
+        do {
+            while (a[up] < t) {
+                up++; // suche grösseres (>=) Element von links an
+            }
+            while ((a[down] >= t) && (down > up)) {
+                down--; // suche echt kleineres (<) Element von rechts an
+            }
+            if (down > up) { // solange keine Überschneidung
+                exchange(a, up, down);
+                up++; down--; // linke und rechte Grenze verschieben
+            } else {
+                allChecked = true; // Austauschen beendet
+            }
+        } while (!allChecked);
+        exchange(a, up, right); // Trennelement an endgültige Position (a[up])
+        if (left < (up - 1)) quickSort(a, left, (up - 1)); // linke Hälfte
+        if ((up + 1) < right) quickSort(a, (up + 1), right); // rechte Hälfte, ohne T’Elt.
     }
 
     /**
@@ -50,7 +70,7 @@ public final class QuicksortRecursive {
      * @param right upper bound of the array.
      * @return the partition index.
      */
-    public static int partition(int[] array, int left, int right) {
+    private static int partition(int[] array, int left, int right) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -40,23 +40,36 @@ public final class DemoQuicksort {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 300_000;
+        final int size = 1_000_000;
         final int[] arrayOriginal = new int[size];
         try (final ForkJoinPool pool = new ForkJoinPool()) {
             RandomInitTask initTask = new RandomInitTask(arrayOriginal, 100);
             pool.invoke(initTask);
             int[] arrayTask = Arrays.copyOf(arrayOriginal, size);
             final QuicksortTask sortTask = new QuicksortTask(arrayTask);
+
+            long startConc = System.nanoTime();
             pool.invoke(sortTask);
-            LOG.info("QuicksortTask  : {} sec.", '?');
+            long durationConc = System.nanoTime() - startConc;
+            LOG.info("QuicksortTask  : {} sec.", toSeconds(durationConc));
+
             int[] arrayRec = Arrays.copyOf(arrayOriginal, size);
-            QuicksortRecursive.quicksort(arrayRec);
-            LOG.info("QuicksortRec.  : {} sec.", '?');
+            long startRec = System.nanoTime();
+            QuicksortRecursive.quickSort(arrayRec);
+            long durationRec = System.nanoTime() - startRec;
+            LOG.info("QuicksortRec.  : {} sec.", toSeconds(durationRec));
+
             int[] arraySort = Arrays.copyOf(arrayOriginal, size);
+            long startSort = System.nanoTime();
             Arrays.sort(arraySort);
-            LOG.info("Arrays.sort    : {} sec.", '?');
+            long durationSort = System.nanoTime() - startSort;
+            LOG.info("Arrays.sort    : {} sec.", toSeconds(durationSort));
         } finally {
             // Executor shutdown
         }
+    }
+
+    private static double toSeconds(long nanos) {
+        return nanos / 1_000_000_000d;
     }
 }
