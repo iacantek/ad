@@ -15,6 +15,9 @@
  */
 package ch.hslu.sw11.exercise.n4.findfile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.concurrent.CountedCompleter;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,6 +27,8 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @SuppressWarnings("serial")
 public final class FindFileTask extends CountedCompleter<String> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FindFileTask.class);
 
     private final String regex;
     private final File dir;
@@ -41,12 +46,28 @@ public final class FindFileTask extends CountedCompleter<String> {
 
     private FindFileTask(final CountedCompleter<?> parent, final String regex, final File dir,
             final AtomicReference<String> result) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super(parent);
+        this.regex = regex;
+        this.dir = dir;
+        this.result = result;
     }
 
     @Override
     public void compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final File[] list = dir.listFiles();
+        if (list != null) {
+            for (File file : list) {
+                if (file.isDirectory()) {
+                    new FindFileTask(this.regex, file).invoke();
+                } else if (this.regex.equalsIgnoreCase(file.getName())) {
+                    var fileName = file.getParentFile().toString();
+                    this.result.set(fileName);
+                    LOG.info(fileName);
+                    quietlyCompleteRoot();
+                    return;
+                }
+            }
+        }
     }
 
     @Override

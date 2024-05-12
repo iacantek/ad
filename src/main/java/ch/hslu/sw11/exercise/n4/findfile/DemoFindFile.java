@@ -41,11 +41,16 @@ public final class DemoFindFile {
         final String search = "find.me";
         final File rootDir = new File(System.getProperty("user.home"));
         LOG.info("Start searching '{}' recurive in '{}'", search, rootDir);
+        long startRec = System.nanoTime();
         FindFile.findFile(search, rootDir);
-        LOG.info("Found in {} msec.", '?');
+        long durationRec = System.nanoTime() - startRec;
+        LOG.info("Found in {} msec.", durationRec);
+
         LOG.info("Find '{}' concurrent in '{}'", search, rootDir);
         final FindFileTask root = new FindFileTask(search, rootDir);
+        long startParallel = System.nanoTime();
         LOG.info(root.invoke());
-        LOG.info("Found in {} msec.", '?');
+        long durationParallel = System.nanoTime() - startParallel;
+        LOG.info("Found in {} msec.", durationParallel);
     }
 }
