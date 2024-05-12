@@ -36,6 +36,14 @@ public final class FibonacciTask extends RecursiveTask<Long> {
 
     @Override
     protected Long compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (n <= 1) {
+            return (long) n;
+        }
+
+        var fibo1 = new FibonacciTask(n - 1);
+        var fibo2 = new FibonacciTask(n - 2);
+        invokeAll(fibo1, fibo2);
+
+        return fibo1.join() + fibo2.join();
     }
 }
