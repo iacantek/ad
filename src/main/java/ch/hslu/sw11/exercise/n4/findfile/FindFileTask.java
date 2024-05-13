@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountedCompleter;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -55,15 +57,15 @@ public final class FindFileTask extends CountedCompleter<String> {
     @Override
     public void compute() {
         final File[] list = dir.listFiles();
+        final List<FindFileTask> children = new ArrayList<>();
         if (list != null) {
             for (File file : list) {
                 if (file.isDirectory()) {
-                    new FindFileTask(this.regex, file).invoke();
-                } else if (this.regex.equalsIgnoreCase(file.getName())) {
-                    var fileName = file.getParentFile().toString();
-                    this.result.set(fileName);
-                    LOG.info(fileName);
-                    quietlyCompleteRoot();
+                    var task = new FindFileTask(this, regex, file, result);
+                    task.fork();
+                    children.add(task);
+                } else if (regex.equalsIgnoreCase(file.getName())) {
+                    result.set(file.getParentFile().toString());
                     return;
                 }
             }

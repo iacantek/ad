@@ -15,6 +15,8 @@
  */
 package ch.hslu.sw11.exercise.n4.fibo;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RecursiveTask;
 
 /**
@@ -23,6 +25,7 @@ import java.util.concurrent.RecursiveTask;
 @SuppressWarnings("serial")
 public final class FibonacciTask extends RecursiveTask<Long> {
 
+    private static final Map<Integer, Long> results = new ConcurrentHashMap<>();
     private final int n;
 
     /**
@@ -40,10 +43,17 @@ public final class FibonacciTask extends RecursiveTask<Long> {
             return (long) n;
         }
 
-        var fibo1 = new FibonacciTask(n - 1);
-        var fibo2 = new FibonacciTask(n - 2);
-        invokeAll(fibo1, fibo2);
+        if (results.containsKey(n)) {
+            return results.get(n);
+        }
 
-        return fibo1.join() + fibo2.join();
+        var fibo1 = new FibonacciTask(n - 1);
+        fibo1.fork();
+        var fibo2 = new FibonacciTask(n - 2);
+
+        var result = fibo1.join() + fibo2.invoke();
+        results.put(n, result);
+
+        return result;
     }
 }
