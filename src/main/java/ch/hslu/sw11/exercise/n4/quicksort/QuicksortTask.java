@@ -58,7 +58,7 @@ public final class QuicksortTask extends RecursiveAction {
             while (a[up] < t) {
                 up++; // suche grösseres (>=) Element von links an
             }
-            while ((a[down] >= t) && (down > up)) {
+            while ((a[down] > t) && (down > up)) {
                 down--; // suche echt kleineres (<) Element von rechts an
             }
             if (down > up) { // solange keine Überschneidung
