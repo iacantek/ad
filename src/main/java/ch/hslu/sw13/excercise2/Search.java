@@ -3,6 +3,11 @@ package ch.hslu.sw13.excercise2;
 public class Search {
     private static final String PATTERN = "ANANAS";
 
+    /**
+     * Ist NICHT mit Hilfe des optimierten Suchautomates implementiert!
+     * @param a String zu durchsuchen.
+     * @return Index der Fundstelle, -1 falls nicht gefunden.
+     */
     public static int stateSearch(final String a) {
         if (a == null || a.isEmpty()) {
             return -1;

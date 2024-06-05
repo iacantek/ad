@@ -18,6 +18,9 @@ package ch.hslu.demo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+ import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * Demo-Applikation für {@link ch.hslu.demo.Point}-Klasse.
  */
@@ -45,5 +48,34 @@ public final class DemoApp {
         final Point point = new Point(COR_X, COR_Y);
         final int quadrant = point.getQuadrant();
         LOGGER.info("{} befindet sich in Quadrant: {}", point, quadrant);
+
+        LOGGER.info(Arrays.stream(initNext("ANANAS"))
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(", ")));
+    }
+
+    /**
+     * Erzeugt für das Pattern einen Musterautomaten.
+     * @param p Pattern, nach dem später gesucht werden soll.
+     * @return Musterautomat in Form eines int-Arrays.
+     */
+    private static int[] initNext(final String p) {
+        final int m = p.length();
+        final int[] next = new int[m];
+        int i = 0;
+        int j = -1;
+        next[0] = -1;
+// special value! (-1 = no reference to a following state)
+        do {
+            if ((j == -1) || (p.charAt(i) == p.charAt(j))) {
+// (j == -1) must be first operand!
+                i++;
+                j++;
+                next[i] = j;
+            } else {
+                j = next[j];
+            }
+        } while (i < (m - 1));
+        return next;
     }
 }
